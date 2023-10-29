@@ -1,0 +1,20 @@
+// app global css in SCSS form
+@import './quasar.variables.scss';
+
+.q-item.q-router-link--active,
+.q-item--active {
+  background-color: $light-exact-background !important;
+  color: $primary !important;
+}
+
+.material-symbols-outlined {
+  font-weight: 300;
+}
+
+.digit {
+  font-family: 'Noto Sans Mono', monospace;
+}
+
+.leading-0 {
+  line-height: normal !important;
+}
