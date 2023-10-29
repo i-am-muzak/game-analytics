@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 import StatisticItem from "../components/common/StatisticItem.vue";
 import Line from "../components/charts/Line.vue";
 import Bar from "../components/charts/Bar.vue";
