@@ -93,7 +93,5 @@ const selectedChannel = ref("None")
 </script>
 
 <style lang="scss" scoped>
-:deep(.q-btn__content) {
-  font-size: 12px;
-}
+
 </style>

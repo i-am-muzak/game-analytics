@@ -3,50 +3,9 @@
     <div class="tw-flex tw-items-center">
       <div class="tw-text-[16px] tw-font-bold">Dashboard</div>
       <div class="tw-flex tw-items-center tw-ml-3">
-        <div
-          class="tw-px-2 tw-py-1 tw-cursor-pointer hover:tw-bg-gray-200 tw-rounded-[3px] tw-text-[12px] tw-flex tw-items-center leading-0"
-        >
-          <span v-if="dateRange">
-            {{ dateRange.from }} - {{ dateRange.to }}
-          </span>
-          <span v-else style="line-height: none"> Choose Dates </span>
-          <span class="tw-flex tw-items-center tw-justify-center tw-ml-[4px]">
-            <q-icon size="18px" name="sym_o_calendar_month"></q-icon>
-          </span>
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            <q-date v-model="dateRange" range> </q-date>
-          </q-popup-proxy>
-        </div>
+        <CustomDateSelect @change="handleCustomDateSelection" />
 
-        <div
-          class="tw-px-2 tw-py-1 tw-cursor-pointer hover:tw-bg-gray-200 tw-rounded-[3px] tw-text-[12px] tw-flex tw-items-center leading-0 tw-ml-[4px]"
-        >
-          Filter
-          <span class="tw-flex tw-items-center tw-justify-center tw-ml-[4px]">
-            <q-icon size="18px" name="sym_o_filter_list"></q-icon>
-          </span>
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
-            nihil, possimus corporis veniam suscipit rerum, iure consequuntur
-            harum obcaecati dolorum ex eius perferendis illum? Repudiandae illo
-            blanditiis atque fugit saepe.
-          </q-popup-proxy>
-        </div>
-
-        <div
-          class="tw-px-2 tw-py-1 tw-cursor-pointer hover:tw-bg-gray-200 tw-rounded-[3px] tw-text-[12px] tw-flex tw-items-center leading-0 tw-ml-[4px]"
-        >
-          Android
-          <span class="tw-flex tw-items-center tw-justify-center tw-ml-[4px]">
-            <q-icon size="18px" name="sym_o_android"></q-icon>
-          </span>
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
-            nihil, possimus corporis veniam suscipit rerum, iure consequuntur
-            harum obcaecati dolorum ex eius perferendis illum? Repudiandae illo
-            blanditiis atque fugit saepe.
-          </q-popup-proxy>
-        </div>
+        <CustomDropdown name="Filter" icon="sym_o_filter_list" />
       </div>
     </div>
     <div class="tw-mt-3">
@@ -72,32 +31,83 @@
     <div class="tw-mt-3">
       <div class="tw-grid lg:tw-grid-cols-3 tw-grid-cols-1 tw-gap-3">
         <div class="tw-bg-white tw-rounded-[3px]">
-          <Line />
+          <Line
+            title="Test"
+            unit-title="Test"
+            :categories="['a', 'b', 'c', 'd', 'e', 'f', 'g']"
+            :series="[
+              {
+                name: 'test',
+                data: Array.from({ length: 7 }, () =>
+                  Math.floor(Math.random() * 20000)
+                ),
+              },
+              {
+                name: 'test2',
+                data: Array.from({ length: 7 }, () =>
+                  Math.floor(Math.random() * 20000)
+                ),
+              },
+            ]"
+          />
         </div>
         <div class="tw-bg-white tw-rounded-[3px]">
           <Bar />
         </div>
         <div class="tw-bg-white tw-rounded-[3px]">
-          <Line />
+          <Line
+            title="Test"
+            unit-title="Test"
+            :categories="['a', 'b', 'c', 'd', 'e', 'f', 'g']"
+            :series="[
+              {
+                name: 'test',
+                data: Array.from({ length: 7 }, () =>
+                  Math.floor(Math.random() * 501)
+                ),
+              },
+            ]"
+          />
         </div>
       </div>
     </div>
     <div class="tw-mt-3">
       <div class="tw-bg-white tw-rounded-[3px]">
-        <Line />
+        <Line
+          title="Test"
+          unit-title="Test"
+          :categories="['a', 'b', 'c', 'd', 'e', 'f', 'g']"
+          :series="[
+            {
+              name: 'test',
+              data: Array.from({ length: 7 }, () =>
+                Math.floor(Math.random() * 501)
+              ),
+            },
+          ]"
+        />
       </div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
+// Imports
 import { ref, Ref } from "vue";
+// Components
 import StatisticItem from "../components/common/StatisticItem.vue";
 import Line from "../components/charts/Line.vue";
 import Bar from "../components/charts/Bar.vue";
+import CustomDateSelect from "../components/common/CustomDateSelect.vue";
+import CustomDropdown from "../components/common/CustomDropdown.vue";
 
+// Interfaces
 import { StatisticItem as StatisticItemType } from "../components/common/StatisticItem";
+import { DateRange } from "../components/common/CustomDateSelect";
 
+// Props
+// Emits
+// Variables
 const statisticItems: Ref<StatisticItemType[]> = ref([
   {
     title: "Clicks",
@@ -143,11 +153,14 @@ const statisticItems: Ref<StatisticItemType[]> = ref([
     tooltip: "Curt",
   },
 ]);
-
-const dateRange = ref({
-  from: "2023/10/11",
-  to: "2023/10/25",
-});
+const dateRange: Ref<DateRange | null> = ref(null);
+// Computed Properties
+// Methods
+function handleCustomDateSelection(value: DateRange): void {
+  dateRange.value = value;
+}
+// Watch
+// Vue Hooks (such as mounted, beforeMounted...)
 </script>
 
 <style lang="scss" scoped>

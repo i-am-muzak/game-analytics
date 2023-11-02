@@ -1,12 +1,14 @@
 <template>
   <div class="tw-w-full">
     <div class="tw-flex tw-items-center tw-justify-between tw-p-[16px]">
-      <span class="tw-font-semibold"> Daily Active Users </span>
-      <span class="digit tw-font-semibold tw-uppercase"> 342.34k </span>
+      <span class="tw-font-semibold"> {{ props.title }} </span>
+      <span class="digit tw-font-semibold tw-uppercase">
+        {{ formattedAverageData ? formattedAverageData : "-" }}
+      </span>
     </div>
     <q-separator color="grey-3"></q-separator>
     <div class="tw-p-[16px] tw-pb-0 text-grey-6 tw-text-[12px]">
-      <span> Users </span>
+      <span> {{ props.unitTitle }} </span>
     </div>
     <apexchart
       type="line"
@@ -18,13 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const series = ref([
-  {
-    name: "STOCK ABC",
-    data: Array.from({ length: 8 }, () => Math.floor(Math.random() * 501)),
-  },
-]);
+// Imports
+import { ref, defineProps, computed } from "vue";
+// Interfaces
+import { Line, Series } from "./Line";
+// Props
+const props = defineProps<Line>();
+// Emits
+// Variables
+const series = ref(props.series);
 
 const options = ref({
   chart: {
@@ -60,7 +64,7 @@ const options = ref({
   },
   xaxis: {
     // labels: {}
-    categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept"],
+    categories: props.categories,
     axisTicks: {
       show: false,
     },
@@ -89,6 +93,47 @@ const options = ref({
     borderColor: "#eff0ef",
   },
 });
+
+// Computed Properties
+const averageData = computed(() => {
+  return calculateOverallAverage(series.value);
+});
+
+const formattedAverageData = computed((): string | null => {
+  const num = averageData.value;
+  if (num) {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(2) + "b";
+    } else if (num >= 1000000) {
+      return (num / 1000000).toFixed(2) + "m";
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(2) + "k";
+    } else {
+      return num.toFixed(2);
+    }
+  }
+  return null;
+});
+// Methods
+function calculateOverallAverage(data: Series[]): number | null {
+  if (data.length) {
+    const totalLength = data.length;
+    // Use reduce to sum up all the values in the "data" arrays of the objects
+    const totalSum = data.reduce((acc, item) => {
+      // For each object in the array, add the sum of its "data" array to the accumulator
+      return (
+        acc +
+        item.data.reduce((sum, value) => sum + value, 0) / item.data.length
+      );
+    }, 0);
+
+    // Calculate the overall average by dividing the total sum by the total number of elements
+    return totalSum / totalLength;
+  }
+  return null;
+}
+// Watch
+// Vue Hooks (such as mounted, beforeMounted...)
 </script>
 
 <style scoped lang="scss">
@@ -108,7 +153,7 @@ const options = ref({
   }
 
   .apexcharts-tooltip-text-y-value {
-    margin-left: 12px
+    margin-left: 12px;
   }
 }
 </style>

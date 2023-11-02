@@ -8,8 +8,10 @@ import { onBeforeMount } from "vue";
 const $q = useQuasar();
 
 function replaceIcons() {
+  // Datetime
   $q.iconSet.datetime.arrowLeft = "sym_o_chevron_left";
   $q.iconSet.datetime.arrowRight = "sym_o_chevron_right";
+  $q.iconSet.datetime.today = "sym_o_today";
 
   // Arrow
   $q.iconSet.arrow.dropdown = "sym_o_arrow_drop_down";
