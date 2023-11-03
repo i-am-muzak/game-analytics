@@ -72,7 +72,6 @@ import Line from "../components/charts/Line.vue";
 import DataTable from "../components/media-library-view/DataTable.vue";
 import CustomDropdown from "../components/common/CustomDropdown.vue";
 import CustomDateSelect from "../components/common/CustomDateSelect.vue";
-
 // Interfaces
 import { DateRange } from "../components/common/CustomDateSelect";
 // Props

@@ -23,6 +23,7 @@ function replaceIcons() {
   $q.iconSet.table.nextPage = "sym_o_chevron_right";
   $q.iconSet.table.prevPage = "sym_o_chevron_left";
   $q.iconSet.table.arrowUp = "sym_o_arrow_drop_up";
+
 }
 
 onBeforeMount(() => {
