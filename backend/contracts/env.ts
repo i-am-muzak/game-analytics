@@ -4,6 +4,7 @@
  * Feel free to let us know via PR, if you find something broken in this contract
  * file.
  */
+import Env from '@ioc:Adonis/Core/Env'
 
 declare module '@ioc:Adonis/Core/Env' {
   /*
@@ -22,3 +23,12 @@ declare module '@ioc:Adonis/Core/Env' {
   interface EnvTypes extends CustomTypes {
   }
 }
+
+export default Env.rules({
+  PG_HOST: Env.schema.string({ format: 'host' }),
+  PG_PORT: Env.schema.number(),
+  POSTGRES_USER: Env.schema.string(),
+  POSTGRES_PASSWORD: Env.schema.string.optional(),
+  POSTGRES_DB: Env.schema.string(),
+})
+
