@@ -29,7 +29,7 @@ export default class User extends BaseModel {
   public group: string
 
   @column()
-  public organization_id: number
+  public organization_id: number | null
 
   @beforeSave()
   public static async hashPassword(user: User) {

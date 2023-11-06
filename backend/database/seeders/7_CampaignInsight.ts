@@ -23,7 +23,7 @@ export default class extends BaseSeeder {
 
     campaigns.forEach(async (campaign) => {
       let count = 0;
-      while (count <= 365) {
+      while (count <= 180) {
         count++;
         const clickValue = Math.floor(randomIntFromInterval(20000, 40000));
         const installValue = Math.floor(randomIntFromInterval(1000, 12000));
