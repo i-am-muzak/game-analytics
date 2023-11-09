@@ -92,8 +92,9 @@
 </template>
 
 <script setup lang="ts">
-// Imports
-import { ref, Ref } from "vue";
+// Imports natives, stores etc...
+import { onMounted, ref, Ref } from "vue";
+import { useUserStore } from "src/stores/user";
 // Components
 import StatisticItem from "../components/common/StatisticItem.vue";
 import Line from "../components/charts/Line.vue";
@@ -104,6 +105,8 @@ import CustomDropdown from "../components/common/CustomDropdown.vue";
 // Interfaces
 import { StatisticItem as StatisticItemType } from "../components/common/StatisticItem";
 import { DateRange } from "../components/common/CustomDateSelect";
+import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 // Props
 // Emits
@@ -154,13 +157,31 @@ const statisticItems: Ref<StatisticItemType[]> = ref([
   },
 ]);
 const dateRange: Ref<DateRange | null> = ref(null);
+const userStore = useUserStore();
 // Computed Properties
 // Methods
 function handleCustomDateSelection(value: DateRange): void {
   dateRange.value = value;
 }
+
+async function getUserProfile() {
+  try {
+    console.log(Cookies.get("session"));
+
+    const response = await api.get(`user/profile`);
+    if (response.status === 200) {
+      userStore.setUserProfile(response.data);
+      console.log(response.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 // Watch
 // Vue Hooks (such as mounted, beforeMounted...)
+onMounted(async () => {
+  await getUserProfile();
+});
 </script>
 
 <style lang="scss" scoped>

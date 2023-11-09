@@ -1,9 +1,11 @@
-import Route from '@ioc:Adonis/Core/Route'
+import Route from "@ioc:Adonis/Core/Route";
 
 /* Routes */
-import {AuthRoutes} from './routes/auth'
+import { AuthRoutes } from "./routes/auth";
+import { UserRoutes } from "./routes/user";
 
-const api_prefix = "api"
+const api_prefix = "api";
 
 // Imports
-AuthRoutes.prefix(api_prefix)
+AuthRoutes.prefix(api_prefix);
+UserRoutes.prefix(api_prefix);

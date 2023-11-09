@@ -17,13 +17,15 @@ function randomIntFromInterval(min, max): number {
 export default class extends BaseSeeder {
   public async run() {
     const campaigns = await RelChannelCampaign.all();
-    const start_date = DateTime.now().minus({ year: 1 });
+    // const start_date = DateTime.now().minus({ year: 1 });
+    const days = 14;
+    const start_date = DateTime.now().minus({ days: days });
 
     var requestData: RequestData[] = [];
 
     campaigns.forEach(async (campaign) => {
       let count = 0;
-      while (count <= 180) {
+      while (count <= days) {
         count++;
         const clickValue = Math.floor(randomIntFromInterval(20000, 40000));
         const installValue = Math.floor(randomIntFromInterval(1000, 12000));
@@ -85,10 +87,10 @@ export default class extends BaseSeeder {
             value: cpi,
             rel_channel_campaigns_id: campaign.id,
           }
-        )
+        );
       }
     });
 
-    await CampaignInsight.createMany(requestData)
+    await CampaignInsight.createMany(requestData);
   }
 }

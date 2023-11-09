@@ -29,6 +29,15 @@ export default class User extends BaseModel {
   public group: string
 
   @column()
+  public first_name: string
+
+  @column()
+  public last_name: string
+
+  @column()
+  public avatar: string
+
+  @column()
   public organization_id: number | null
 
   @beforeSave()

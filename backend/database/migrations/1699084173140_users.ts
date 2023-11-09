@@ -9,6 +9,9 @@ export default class extends BaseSchema {
       table.string("email", 150).unique().notNullable(),
       table.string("password").notNullable(),
       table.string("group").notNullable(),
+      table.string("first_name").notNullable(),
+      table.string("last_name").notNullable(),
+      table.string("avatar").notNullable(),
 
       // Foreign keys
       table.integer('organization_id').unsigned()
